@@ -14,8 +14,8 @@ export default function GalleryHeader({
     <div className="flex items-center justify-between mb-4">
       <h3
         className="bg-[#171717] px-5 py-2 rounded-[20px] text-white text-[16px] font-medium 
-                     shadow-[inset_0px_4px_10px_2px_rgba(0,0,0,0.25)] leading-[100%] 
-                     w-[149px] h-[62px] flex items-center justify-center"
+        shadow-[inset_0px_4px_10px_2px_rgba(0,0,0,0.25)] leading-[100%] 
+        w-[149px] h-[62px] flex items-center justify-center"
       >
         Gallery
       </h3>
@@ -26,8 +26,8 @@ export default function GalleryHeader({
           type="button"
           onClick={() => fileRef?.current?.click()}
           className="flex items-center gap-2 px-[26px] py-[8px] rounded-[20px] text-white text-[12px] h-[46px]
-             border border-white/10 backdrop-blur-md
-             transition-all duration-300 ease-in-out active:scale-95 relative overflow-hidden"
+          border border-white/10 backdrop-blur-md
+          transition-all duration-300 ease-in-out active:scale-95 relative overflow-hidden"
           style={{
             background:
               "linear-gradient(180deg, rgba(90,92,96,0.5) 0%, rgba(42,45,51,0.8) 100%)",
@@ -43,7 +43,6 @@ export default function GalleryHeader({
               "linear-gradient(180deg, rgba(90,92,96,0.5) 0%, rgba(42,45,51,0.8) 100%)";
           }}
         >
-          
           <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 hover:opacity-60 transition-opacity duration-500"></span>
           <span className="relative z-10">+ ADD IMAGE</span>
         </button>
@@ -59,7 +58,7 @@ export default function GalleryHeader({
 
         {/* Navigation Buttons */}
         <IconButton
-          onClick={() => typeof handlePrev === "function" && handlePrev()}
+          onClick={handlePrev}
           disabled={!canPrev}
           ariaLabel="previous"
         >
@@ -79,7 +78,7 @@ export default function GalleryHeader({
         </IconButton>
 
         <IconButton
-          onClick={() => typeof handleNext === "function" && handleNext()}
+          onClick={handleNext}
           disabled={!canNext}
           ariaLabel="next"
         >

@@ -17,11 +17,14 @@ export default function GalleryWidget() {
     "/placeholder1.png",
     "/placeholder2.png",
   ]);
-  const [startIndex, setStartIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const visibleCount = 3;
+
 
   const onFiles = (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
+
     const readers = files.map(
       (file) =>
         new Promise((resolve) => {
@@ -30,20 +33,31 @@ export default function GalleryWidget() {
           reader.readAsDataURL(file);
         })
     );
-    Promise.all(readers).then((urls) => setImages((prev) => [...prev, ...urls]));
+
+    Promise.all(readers).then((urls) =>
+      setImages((prev) => [...prev, ...urls])
+    );
+
     e.target.value = "";
   };
 
+
   const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-  const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % images.length);
+    setCurrentIndex((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1
+    );
   };
 
+  const handleNext = () => {
+    setCurrentIndex((prev) =>
+      (prev + 1) % images.length
+    );
+  };
+
+
   const visibleImages = [];
-  for (let i = 0; i < 3; i++) {
-    visibleImages.push(images[(startIndex + i) % images.length]);
+  for (let i = 0; i < visibleCount; i++) {
+    visibleImages.push(images[(currentIndex + i) % images.length]);
   }
 
   return (
@@ -53,7 +67,6 @@ export default function GalleryWidget() {
       text-[20px] font-normal h-[330px]`}
     >
       <div className="flex h-full">
-        
         {/* Left icons */}
         <div className="flex flex-col items-center gap-22 mr-4">
           <img src="/question-mark.png" alt="question mark" className="w-6 h-6" />
@@ -62,13 +75,15 @@ export default function GalleryWidget() {
           </div>
         </div>
 
-        {/* Main content */}
+      
         <div className="flex-1 flex flex-col">
           <GalleryHeader
             fileRef={fileRef}
             onFiles={onFiles}
             handlePrev={handlePrev}
             handleNext={handleNext}
+            canPrev={images.length > 1}
+            canNext={images.length > 1}
           />
           <ImageGrid visibleImages={visibleImages} />
         </div>
